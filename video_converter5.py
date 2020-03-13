@@ -2,6 +2,13 @@
 import numpy as np 
 import cv2
 from PIL import Image
+
+def rectangle(f,x1,y1,w1,h1):
+    print("rec")
+    cv2.rectangle(f,(y1,x1),(y1+h1,w1+x1),(0,255,0),5)
+    print("angle")
+
+
 """
 im1= cv2.imread("roi_new.png")
 im2= cv2.imread("car.png")
@@ -40,7 +47,10 @@ imCrop_roi=''
 in_char='Y'
 while(cap.isOpened()): 
     ret, frame = cap.read()
+    
     gray= cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+    cv2.namedWindow('frame',2)
+    cv2.imshow('frame',frame)
     coordinates=[]
     inn_coords=[]
     if(flag==1):
@@ -49,14 +59,12 @@ while(cap.isOpened()):
             fromCenter = False
             cv2.namedWindow("roi",2)
             r = cv2.selectROI("roi", frame, fromCenter, showCrosshair)
-             
-            #r= cv2.selectROI("frame",frame,False,False)
-            
             imCrop_roi= frame[int(r[1]) : int(r[1])+int(r[3]) , int(r[0]) : int(r[0])+ int(r[2])]
             x=int(r[1])
             y=int(r[0])
             w=int(r[3])
             h=int(r[2])
+            
             inn_coords.append(x)
             inn_coords.append(y)
             inn_coords.append(w)
@@ -64,26 +72,34 @@ while(cap.isOpened()):
             
             print(inn_coords)
             coordinates.append(inn_coords)
+            inn_coords=[]
             print(coordinates)
             #cv2.imwrite("roi.png",imCrop_roi)
-            
+        
+            cv2.rectangle(frame,(y,x),(y+h,w+x),(0,255,0),5)
+            cv2.imshow('frame',frame)
             in_char=input("select more??")
            
         cv2.destroyWindow("roi")
         flag=0
-
+    cv2.imshow('frame',frame)
     for i in coordinates:
         x=i[0]
         y=i[1]
         w=i[2]
         h=i[3]
+        cv2.rectangle(frame,(y,x),(y+h,w+x),(0,255,0),5)
+        #rectangle(frame,x,y,w,h)
         #cv2.rectangle(frame,(i[1],i[0]),(i[1]+i[3],i[2]+i[0]),(0,255,0),10)
         #imCrop_frame= gray[i[0]:i[0]+i[2],i[1]:i[1]+i[3]]
+    for row in coordinates:
+        for col in range(len(row)):
+            print(row[col])
+            
     imCrop_frame= gray[x:x+w,y:y+h]
     
-    cv2.rectangle(frame,(y,x),(y+h,w+x),(0,255,0),5)
-    cv2.namedWindow('frame',2)
-    cv2.imshow('frame',frame)
+    #cv2.rectangle(frame,(y,x),(y+h,w+x),(0,255,0),5)
+    
     #cv2.rectangle(frame,(964,653),(964+150,155+653),(0,255,0),5)
     fgmask = fgbg.apply(imCrop_frame)
     
@@ -96,8 +112,7 @@ while(cap.isOpened()):
     #cv2.rectangle(frame,(y,x),(y+h,w+x),(0,0,255,10))
     #fgmask= imCrop_roi - frame
     #cv2.imshow('fg', foregrnd)
-    cv2.namedWindow('frame',2)
-    cv2.imshow('frame',frame)
+    
     cv2.namedWindow('gray',2)
     cv2.imshow('gray', imCrop_frame)
     cv2.namedWindow('mask',2)
@@ -110,3 +125,24 @@ while(cap.isOpened()):
   
 cap.release()
 cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
