@@ -80,9 +80,8 @@ while(cap.isOpened()):
             cv2.imshow('frame',frame)
             in_char=input("select more??")
            
-        cv2.destroyWindow("roi")
+      #  cv2.destroyWindow("roi")
         flag=0
-    cv2.imshow('frame',frame)
     for i in coordinates:
         x=i[0]
         y=i[1]
@@ -92,10 +91,8 @@ while(cap.isOpened()):
         #rectangle(frame,x,y,w,h)
         #cv2.rectangle(frame,(i[1],i[0]),(i[1]+i[3],i[2]+i[0]),(0,255,0),10)
         #imCrop_frame= gray[i[0]:i[0]+i[2],i[1]:i[1]+i[3]]
-    for row in coordinates:
-        for col in range(len(row)):
-            print(row[col])
-            
+
+       
     imCrop_frame= gray[x:x+w,y:y+h]
     
     #cv2.rectangle(frame,(y,x),(y+h,w+x),(0,255,0),5)
@@ -109,14 +106,13 @@ while(cap.isOpened()):
         print("car")
         print(n_white_pix)
         cv2.rectangle(frame,(y,x),(y+h,w+x),(0,0,255),5)
-    #cv2.rectangle(frame,(y,x),(y+h,w+x),(0,0,255,10))
-    #fgmask= imCrop_roi - frame
-    #cv2.imshow('fg', foregrnd)
     
-    cv2.namedWindow('gray',2)
-    cv2.imshow('gray', imCrop_frame)
-    cv2.namedWindow('mask',2)
-    cv2.imshow("mask",fgmask)
+    cv2.imshow('frame',frame)
+
+    #cv2.namedWindow('gray',2)
+    #cv2.imshow('gray', imCrop_frame)
+    #cv2.namedWindow('mask',2)
+    #cv2.imshow("mask",fgmask)
       
     k = cv2.waitKey(30) & 0xff
     if k == 27: 
