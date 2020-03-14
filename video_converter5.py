@@ -8,7 +8,6 @@ im2= cv2.imread("car.png")
 im3= im1-im2
 fgbg = cv2.createBackgroundSubtractorMOG2() 
 fgmask = fgbg.apply(im2)
-
   
 while(1):
     cv2.imshow("im",im3)
@@ -18,11 +17,10 @@ while(1):
         break
       
   
-
 cv2.destroyAllWindows()
     
 """
-cap = cv2.VideoCapture('E:\\IGDTUW\\Parking_Hero\\DATA\\images,gifs,videos\\parking.MOV') 
+cap = cv2.VideoCapture("rtsp://root:thingQbator%40123@192.168.1.12:554/live.sdp") 
 fgbg = cv2.createBackgroundSubtractorMOG2(history=1,varThreshold=1000,detectShadows=False)
 #print(fgbg)
 #im1= cv2.imread("roi_new.png")
@@ -51,8 +49,6 @@ while(cap.isOpened()):
         
         cv2.imwrite("roi.png",imCrop_roi)
         cv2.destroyWindow("ROI selector")
-        print("select more??")
-        input(in_char)
         flag=0
     cv2.rectangle(frame,(y,x),(y+h,w+x),(0,255,0),5)
     imCrop_frame= gray[x:x+w,y:y+h]
